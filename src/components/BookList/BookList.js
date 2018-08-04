@@ -21,7 +21,7 @@ class bookList extends React.Component {
   }
 
   render() {
-    const {value, onRemoveBook, onAddBook, Books, currentPage, itemsPerPage, onInputChange, loaded} = this.props;
+    const {value, onRemoveBook, Books, currentPage, itemsPerPage, onInputChange, loaded} = this.props;
     const startOffset = (currentPage - 1) * itemsPerPage;
     let startCount = 0;
 
@@ -39,52 +39,40 @@ class bookList extends React.Component {
             <ListGroup>
               {Books.map((Book, index) => {
                 return index >= startOffset && startCount < itemsPerPage ? ++startCount && (
-                  <ListGroupItem
-                    key={index}
-                    className="text-center">
-                    <img
-
-                      src={`https://placem.at/things?w=150&h=100&random=1&t=${Math.random() * 10000}`}
-                    />
+                  <ListGroupItem key={index} className="text-center">
+                    <img alt="book" src={`https://placem.at/things?w=200&h=200&random=1&t=${index +1000}`}/>
                     <p>
                       {Book.title}
                     </p>
-
-                    <h3>Author Name:</h3>
                     <p>{Book.author}</p>
+                    <Button color="warning" onClick={this.toggle}>Edit</Button>
 
-                    <h3>Published Date:</h3>
-                    <p>{Book.date}</p>
-                    <Button color="danger" onClick={this.toggle}>Edit</Button>
                     <Modal isOpen={this.state.modal} toggle={this.toggle} className={this.props.className}>
-                      <ModalHeader toggle={this.toggle}>Modal title</ModalHeader>
+                      <ModalHeader toggle={this.toggle}>Edit book</ModalHeader>
                       <ModalBody>
-                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+                        <p>
+                          {Book.title}
+                        </p>
+
+                        <h3>Author Name:</h3>
+                        <p>{Book.author}</p>
+
+                        <h3>Published Date:</h3>
+                        <p>{Book.date}</p>
                       </ModalBody>
                       <ModalFooter>
-                        <Button color="primary" onClick={this.toggle}>Do Something</Button>{' '}
+                        <Button color="primary" onClick={this.toggle}>Do Something</Button>
                         <Button color="secondary" onClick={this.toggle}>Cancel</Button>
                       </ModalFooter>
                     </Modal>
-                    {!Book.isBook ? (
-                      <Button
-                        style={{marginBottom: "10px"}}
-                        color="success"
-                        onClick={() => onAddBook(Book)}>
-                        Add To List
-                      </Button>
-                    ) : (
-                      <Button
-                        style={{marginBottom: "10px"}}
-                        color="danger"
-                        onClick={() => onRemoveBook(Book)}>
-                        Remove From Friend List
-                      </Button>
-                    )}
+                    <Button
+                      style={{marginBottom: "10px"}}
+                      color="danger"
+                      onClick={() => onRemoveBook(Book)}>
+                      Delete
+                    </Button>
                   </ListGroupItem>
-                ) : (
-                  null
-                );
+                ) : <Loader/>
               })}
             </ListGroup>
 

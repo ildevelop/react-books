@@ -8,7 +8,6 @@ import * as selector from './../selectors'
 import * as mainActions from '../actions/mainActions';
 import Header from "../components/Header/Header";
 import BookList from "../components/BookList/BookList";
-import MyBook from "../components/MyBook/MyBook";
 
 
 class App extends Component {
@@ -31,6 +30,7 @@ class App extends Component {
     this.props.searchBook(value);
   };
   handleRemoveMyBook = Book => {
+    console.log('remove book',Book);
     this.props.removeBook(Book);
   };
   handleAddBook= Book => {
@@ -44,7 +44,7 @@ class App extends Component {
   };
 
   render() {
-    const { loaded,searchValue,searchedUsers,myBooks} = this.props;
+    const { loaded,searchValue,searchedUsers} = this.props;
     const {itemsPerPage, currentPage} = this.state;
 
     return (
@@ -65,19 +65,6 @@ class App extends Component {
                   currentPage={currentPage}
                   itemsPerPage={itemsPerPage}
                   page={this.page}
-                />
-              );
-            }}
-          />
-          <Route
-            path="/myBooks"
-            render={() => {
-              return (
-                <MyBook
-                  loaded={loaded}
-                  Books={myBooks}
-                  onRemovemyBook={this.handleRemoveMyBook}
-                  onAddToFavemyBook={this.handleAddBook}
                 />
               );
             }}

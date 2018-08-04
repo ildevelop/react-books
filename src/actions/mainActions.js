@@ -22,7 +22,7 @@ export const searchBook = value => {
 export const removeBook = Book => {
   return {
     type: mainConstanst.REMOVE_MY_Book,
-    Book
+    payload:Book
   };
 };
 export const addBook = Book => {

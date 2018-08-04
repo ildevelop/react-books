@@ -29,8 +29,11 @@ const mainReducer = (state = initialState, action) => {
       const searchedToAdd = state.Books.findIndex(Book => Book.title=== action.Book.title);
       return dotProp.set(state, `Books.${searchedToAdd}.isBook`, true);
     case actionTypes.REMOVE_MY_Book:
-      const searchedToRemove = state.Books.findIndex(Book => Book.title === action.Book.title);
-      return dotProp.set(state, `Books.${searchedToRemove}.isBook`, false);
+      console.log('BOOK:',action.payload);
+      const searchedToRemove = state.Books.filter(book => book.id !== action.payload.id);
+      console.log('searchedToRemove',searchedToRemove);
+
+      return {...state,Books:searchedToRemove} ;
 
     default:
       return state;
