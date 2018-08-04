@@ -30,7 +30,6 @@ class App extends Component {
     this.props.searchBook(value);
   };
   handleRemoveMyBook = Book => {
-    console.log('remove book',Book);
     this.props.removeBook(Book);
   };
   handleAddBook= Book => {

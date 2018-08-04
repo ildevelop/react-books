@@ -2,7 +2,6 @@ import React, {Fragment} from "react";
 import { Button, ListGroup, ListGroupItem, Input ,Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 import Loader from '../Loader/Loader';
-// import Pagination from "../Pagination/index";
 import './BookList.scss'
 
 class bookList extends React.Component {
