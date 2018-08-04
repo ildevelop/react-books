@@ -1,5 +1,5 @@
 import React, {Fragment} from "react";
-import { Button, ListGroup, ListGroupItem, Input,Label ,Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {Button, ListGroup, ListGroupItem, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 
 import Loader from '../Loader/Loader';
 import './BookList.scss'
@@ -14,7 +14,7 @@ class bookList extends React.Component {
 
 
   render() {
-    const {value, onRemoveBook,onEditBook, Books, currentPage, itemsPerPage, onInputChange, loaded} = this.props;
+    const {value, onRemoveBook, onEditBook, Books, currentPage, itemsPerPage, onInputChange, loaded} = this.props;
     const startOffset = (currentPage - 1) * itemsPerPage;
     let startCount = 0;
 
@@ -32,21 +32,23 @@ class bookList extends React.Component {
             <ListGroup>
               {Books.map((Book, index) => {
                 return index >= startOffset && startCount < itemsPerPage ? ++startCount && (
-                  <ListGroupItem key={index} className="text-center" onClick={(value)=>{
-                    console.log("data",value);}}>
-                    <img alt="book" src={`https://placem.at/things?w=200&h=200&random=1&t=${index +1000}`}/>
+                  <ListGroupItem key={index} className="text-center" onClick={(value) => {
+                    console.log("data", value);
+                  }}>
+                    <img alt="book" src={`https://placem.at/things?w=200&h=200&random=1&t=${index + 1000}`}/>
                     <p>
                       {Book.title}
                     </p>
                     <p>{Book.author}</p>
 
-
-                    <Button color="warning" onClick={() => onEditBook(Book)}>Edit</Button>
+                    <Button color="warning"
+                            onClick={() => onEditBook(Book)}
+                            style={{marginBottom: "10px",borderRadius:"1rem 0 0 1rem"}}> E d i t  </Button>
                     <Button
-                      style={{marginBottom: "10px"}}
+                      style={{marginBottom: "10px",borderRadius:"0 1rem 1rem 0"}}
                       color="danger"
                       onClick={() => onRemoveBook(Book)}>
-                      Delete
+                      D e l e t e
                     </Button>
                   </ListGroupItem>
                 ) : <Loader/>

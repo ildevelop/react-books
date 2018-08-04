@@ -52,7 +52,7 @@ class App extends Component {
       date:Book.date,
       modal: !this.state.modal
     })
-    // this.props.addBook(Book);
+    // this.props.editBook(Book);
   };
 
   page = page => {
