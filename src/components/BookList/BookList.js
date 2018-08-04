@@ -1,5 +1,5 @@
 import React, {Fragment} from "react";
-import {Button, ListGroup, ListGroupItem, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
+import {Button, ListGroup, ListGroupItem, Input} from 'reactstrap';
 
 import Loader from '../Loader/Loader';
 import './BookList.scss'
@@ -35,11 +35,9 @@ class bookList extends React.Component {
                   <ListGroupItem key={index} className="text-center" onClick={(value) => {
                     console.log("data", value);
                   }}>
-                    <img alt="book" src={`https://placem.at/things?w=200&h=200&random=1&t=${index + 1000}`}/>
-                    <p>
-                      {Book.title}
-                    </p>
+                    <img alt="book" src={Book.img}/>
                     <p>{Book.author}</p>
+                    <p>{Book.title}</p>
 
                     <Button color="warning"
                             onClick={() => onEditBook(Book)}

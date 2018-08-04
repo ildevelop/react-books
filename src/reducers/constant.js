@@ -6,3 +6,4 @@ export const FETCH_Books_START= 'FETCH_Books_START';
 export const SEARCH_Book= 'SEARCH_Book';
 export const ADD_MY_Book= 'ADD_MY_Book';
 export const REMOVE_MY_Book= 'REMOVE_MY_Book';
+export const EDIT_MY_BOOK= 'EDIT_MY_BOOK';

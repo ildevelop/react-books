@@ -33,6 +33,13 @@ const mainReducer = (state = initialState, action) => {
       console.log('searchedToRemove',searchedToRemove);
 
       return {...state,Books:searchedToRemove} ;
+    case actionTypes.EDIT_MY_BOOK:
+      console.log("EDIT_MY_BOOK",action.payload);
+      const newNooks = state.Books.filter(book => book.id !== action.payload.id);
+      newNooks.push(action.payload);
+      console.log('searchedToRemove',newNooks );
+
+      return {...state,Books:newNooks } ;
 
     default:
       return state;

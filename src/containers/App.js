@@ -18,6 +18,7 @@ class App extends Component {
       modal: false,
       author:"",
       title:"",
+      id:null,
       date: new Date()
     };
     this.toggle = this.toggle.bind(this);
@@ -28,15 +29,11 @@ class App extends Component {
       modal: !this.state.modal
     });
   }
-  onChange = date => this.setState({ date })
 
   componentDidMount() {
     this.props.getBook();
   }
 
-  componentDidUpdate() {
-    localStorage.setItem("Books", JSON.stringify(this.props.Books));
-  }
   handleSearchBook = value => {
     this.props.searchBook(value);
   };
@@ -49,11 +46,16 @@ class App extends Component {
       author:Book.author,
       title:Book.title,
       date:Book.date,
+      id:Book.id,
+      img:Book.img,
       modal: !this.state.modal
     })
-    // this.props.editBook(Book);
   };
 
+  onUpdate(){
+    this.props.editBook({author:this.state.author,title:this.state.title,date:this.state.date,id:this.state.id,img:this.state.img});
+    this.toggle()
+  }
   page = page => {
     this.setState({
       currentPage: page
@@ -83,20 +85,29 @@ class App extends Component {
           <Modal isOpen={this.state.modal} toggle={this.toggle} >
             <ModalHeader toggle={this.toggle}>Edit book</ModalHeader>
             <ModalBody>
+              <Label for="exampleEmail">Author Name:</Label>
+              <Input type="text"  placeholder="title of your book" value={author}
+                     onChange={(value) => {
+                       this.setState({author:value.target.value})
+                       console.log("value",value.target.value);}} />
+
+
               <Label for="exampleEmail">Title</Label>
-              <Input type="text"  placeholder="title of your book" value={title} onChange={(value) => {
+              <Input type="text"  placeholder="title of your book" value={title}
+                     onChange={(value) => {
+                       this.setState({title:value.target.value})
                 console.log("value",value.target.value);}} />
 
-              <Label for="exampleEmail">Author Name:</Label>
-              <Input type="text"  placeholder="title of your book" value={author} />
-
               <Label for="exampleEmail">Published Date:</Label>
-              <Input type="date"  placeholder="title of your book" value={date} />
+              <Input type="date"  placeholder="title of your book" value={date}
+                     onChange={(value) => {
+                       this.setState({date:value.target.value})
+                       console.log("value",value.target.value);}} />
 
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={this.toggle}>Do Something</Button>
-              <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+              <Button color="primary" onClick={this.toggle}>Cancel</Button>
+              <Button color="success" onClick={this.onUpdate.bind(this)}>Edit</Button>
             </ModalFooter>
           </Modal>
         </Container>

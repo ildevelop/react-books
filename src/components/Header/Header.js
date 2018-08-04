@@ -17,10 +17,10 @@ const Header = () => {
       <Collapse isOpen={true} navbar>
         <Nav className="ml-auto" navbar>
           <NavItem>
-            <NavLink href="/components/">Components</NavLink>
+            <NavLink href="https://www.linkedin.com/in/ilya-radu-0770b5b8/">linkedin</NavLink>
           </NavItem>
           <NavItem>
-            <NavLink href="https://github.com/reactstrap/reactstrap">GitHub</NavLink>
+            <NavLink href="https://github.com/ildevelop/react-books">GitHub</NavLink>
           </NavItem>
         </Nav>
       </Collapse>

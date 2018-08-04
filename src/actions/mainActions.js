@@ -10,7 +10,9 @@ export const getBook = () => async dispatch => {
   let newBooks = mockApiData.map(book => ({
     author: book.author,
     date: book.date,
-    title: formatTitle(book.title)
+    title: formatTitle(book.title),
+    id:book.id,
+    img:"https://placem.at/things?w=200&h=200&random="+book.id
 
   }));
   setTimeout(() => {
@@ -35,8 +37,9 @@ export const removeBook = Book => {
   };
 };
 export const editBook = Book => {
+  console.log('editBook',Book);
   return {
-    type: mainConstanst.REMOVE_MY_Book,
+    type: mainConstanst.EDIT_MY_BOOK,
     payload: Book
   };
 };
