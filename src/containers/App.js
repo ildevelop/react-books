@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
 import { withRouter } from 'react-router';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -66,49 +65,43 @@ class App extends Component {
     const {itemsPerPage, currentPage,author,title,date} = this.state;
 
     return (
-      <Container>
+      <div>
         <Header />
-        <Switch>
-          <Route
-            exact path="/"
-            render={() => {
-              return (
-                <BookList
-                  loaded={loaded}
-                  Books={searchedUsers}
-                  value={searchValue}
-                  onInputChange={this.handleSearchBook}
-                  onEditBook={this.onEditBook}
-                  onRemoveBook={this.handleRemoveMyBook}
-                  currentPage={currentPage}
-                  itemsPerPage={itemsPerPage}
-                  page={this.page}
-                />
-              );
-            }}
+        <Container>
+
+          <BookList
+            loaded={loaded}
+            Books={searchedUsers}
+            value={searchValue}
+            onInputChange={this.handleSearchBook}
+            onEditBook={this.onEditBook}
+            onRemoveBook={this.handleRemoveMyBook}
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            page={this.page}
           />
+          <Modal isOpen={this.state.modal} toggle={this.toggle} >
+            <ModalHeader toggle={this.toggle}>Edit book</ModalHeader>
+            <ModalBody>
+              <Label for="exampleEmail">Title</Label>
+              <Input type="text"  placeholder="title of your book" value={title} onChange={(value) => {
+                console.log("value",value.target.value);}} />
 
-        </Switch>
-        <Modal isOpen={this.state.modal} toggle={this.toggle} >
-          <ModalHeader toggle={this.toggle}>Edit book</ModalHeader>
-          <ModalBody>
-            <Label for="exampleEmail">Title</Label>
-            <Input type="text"  placeholder="title of your book" value={title} onChange={(value) => {
-              console.log("value",value.target.value);}} />
+              <Label for="exampleEmail">Author Name:</Label>
+              <Input type="text"  placeholder="title of your book" value={author} />
 
-            <Label for="exampleEmail">Author Name:</Label>
-            <Input type="text"  placeholder="title of your book" value={author} />
+              <Label for="exampleEmail">Published Date:</Label>
+              <Input type="date"  placeholder="title of your book" value={date} />
 
-            <Label for="exampleEmail">Published Date:</Label>
-            <Input type="date"  placeholder="title of your book" value={date} />
+            </ModalBody>
+            <ModalFooter>
+              <Button color="primary" onClick={this.toggle}>Do Something</Button>
+              <Button color="secondary" onClick={this.toggle}>Cancel</Button>
+            </ModalFooter>
+          </Modal>
+        </Container>
+      </div>
 
-          </ModalBody>
-          <ModalFooter>
-            <Button color="primary" onClick={this.toggle}>Do Something</Button>
-            <Button color="secondary" onClick={this.toggle}>Cancel</Button>
-          </ModalFooter>
-        </Modal>
-      </Container>
     );
   }
 }
