@@ -2,50 +2,29 @@ import {createStore, applyMiddleware} from 'redux';
 import {composeWithDevTools} from 'redux-devtools-extension'
 import thunk from 'redux-thunk'
 import * as actionTypes from '../reducers/constant'
-import * as dotProp from 'dot-prop-immutable';
 
 const initialState = {
   Books: [],
-  Book: {},
   searchedValue: "",
-  loaded: false
+  loaded: false,
 };
 
 const mainReducer = (state = initialState, action) => {
   switch (action.type) {
-    case actionTypes.ADD_Book:
-      return {...state, Book: state.Book + 1};
     case actionTypes.FETCH_Books_SUCCESS:
-      console.log('actionStore', action.Books);
       return {...state, Books: action.Books, loaded: true};
-    case actionTypes.FETCH_LOCAL_BookS_SUCCESS:
-      return {...state, Books: action.Books, loaded: true};
-    case actionTypes.FETCH_Books_FAILURE:
-      console.log('ERRR', action);
-      return {...state, Books: action.data, loaded: true};
     case actionTypes.SEARCH_Book:
       return {...state, searchedValue: action.value};
-    case actionTypes.ADD_MY_Book:
-      const searchedToAdd = state.Books.findIndex(Book => Book.title=== action.Book.title);
-      return dotProp.set(state, `Books.${searchedToAdd}.isBook`, true);
     case actionTypes.REMOVE_MY_Book:
       const searchedToRemove = state.Books.filter(book => book.id !== action.payload.id);
-      console.log('searchedToRemove',searchedToRemove);
-
       return {...state,Books:searchedToRemove} ;
     case actionTypes.EDIT_MY_BOOK:
-      console.log("EDIT_MY_BOOK",action.payload);
       const newNooks = state.Books.filter(book => book.id !== action.payload.id);
       newNooks.push(action.payload);
-      console.log('searchedToRemove',newNooks );
-
       return {...state,Books:newNooks } ;
     case actionTypes.ADD_NEW_BOOK:
-      console.log("ADD_NEW_BOOK",action.payload);
       let newBooks = state.Books;
       newBooks.push(action.payload);
-      console.log('newBooks',newBooks);
-
       return {...state,Books:newBooks } ;
 
     default:

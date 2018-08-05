@@ -1,7 +1,6 @@
 import * as mainConstanst from '../reducers/constant'
 
 const mockApiData = require('./../data');
-const books = (state) => state.books || [];
 const formatTitle = (title) => title && title.replace(/\W/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase().split(' ')
   .map((word) => word && (word[0].toUpperCase() + word.slice(1))).join(' ') || '';
 
@@ -37,9 +36,7 @@ export const removeBook = Book => {
   };
 };
 export const editBook = Book => {
-  console.log('editBook',Book);
   let newTitle = formatTitle(Book.title);
-  console.log('newTitle',newTitle);
   if(Book.newBook){
     return {
       type: mainConstanst.ADD_NEW_BOOK,
@@ -65,16 +62,5 @@ export const editBook = Book => {
   }
 
 };
-export const addBook = Book => {
-  let newTitle = formatTitle(Book.title);
-  return {
-    type: mainConstanst.ADD_MY_Book,
-    Book: {
-      author: Book.author,
-      title: newTitle,
-      date: Book.date,
-      id: Book.id,
-      img: Book.img,
-    }};
-};
+
 

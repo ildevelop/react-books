@@ -9,7 +9,5 @@ export const getSearchedBook= createSelector(getBooks, getSearchValue, (Books, s
   return Books.filter(Book => Book.title.includes(searchValue) || Book.author.includes(searchValue));
 });
 
-export const getMyBooks = createSelector(getBooks, (Books) => {
-  return Books.filter(Book => Book.isBook);
-});
+
 

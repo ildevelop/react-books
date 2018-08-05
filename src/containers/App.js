@@ -13,7 +13,6 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      books:this.props.Books,
       currentPage: 1,
       itemsPerPage: 20,
       modal: false,
@@ -22,7 +21,7 @@ class App extends Component {
       id:null,
       newBook:null,
       img:null,
-      date: null
+      date: ""
     };
     this.toggle = this.toggle.bind(this);
 
@@ -35,16 +34,11 @@ class App extends Component {
       id:null,
       newBook:null,
       img:null,
-      date:null
+      date:""
     });
   }
-  // componentWillReceiveProps(nextProps, nextState) {
-  //   console.log('nextProps',nextProps);
-  //   console.log('nextState',nextState);
-  //
-  //   this.props = nextProps;
-  // }
-  componentDidMount() {
+
+  componentWillMount() {
     this.props.getBook();
   }
 
@@ -55,7 +49,6 @@ class App extends Component {
     this.props.removeBook(Book);
   };
   onEditBook= Book => {
-    console.log('onEditBook2',Book);
     if (Book.id){
       this.setState({
         author:Book.author,
@@ -86,9 +79,10 @@ class App extends Component {
   };
 
   render() {
-    const { loaded,searchValue,searchedUsers} = this.props;
+    const { loaded,searchValue,searchedUsers,Books} = this.props;
     const {itemsPerPage, currentPage,author,title,date} = this.state;
-
+    let count = this.props.counter;
+    console.log('main reducer',count);
     return (
       <div>
         <Header onEditBook={this.onEditBook} />
@@ -96,7 +90,7 @@ class App extends Component {
 
           <BookList
             loaded={loaded}
-            Books={searchedUsers}
+            Books={Books}
             value={searchValue}
             onInputChange={this.handleSearchBook}
             onEditBook={this.onEditBook}
@@ -110,22 +104,16 @@ class App extends Component {
             <ModalBody>
               <Label for="exampleEmail">Author Name:</Label>
               <Input type="text"  placeholder="title of your book" value={author}
-                     onChange={(value) => {
-                       this.setState({author:value.target.value})
-                       console.log("value",value.target.value);}} />
-
-
+                     onChange={(value) => {this.setState({author:value.target.value})}} />
               <Label for="exampleEmail">Title</Label>
               <Input type="text"  placeholder="title of your book" value={title}
                      onChange={(value) => {
-                       this.setState({title:value.target.value})
-                console.log("value",value.target.value);}} />
+                       this.setState({title:value.target.value})}} />
 
               <Label for="exampleEmail">Published Date:</Label>
               <Input type="date"  placeholder="title of your book" value={date}
                      onChange={(value) => {
-                       this.setState({date:value.target.value})
-                       console.log("value",value.target.value);}} />
+                       this.setState({date:value.target.value})}} />
 
             </ModalBody>
             <ModalFooter>
@@ -149,8 +137,7 @@ const mapStateToProps = state => ({
   Books: selector.getBooks(state),
   searchValue:selector.getSearchValue(state),
   searchedUsers: selector.getSearchedBook(state),
-  myBooks: selector.getMyBooks(state),
-
+  counter:state.countBooks
 
 });
 
