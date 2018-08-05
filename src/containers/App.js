@@ -100,8 +100,7 @@ class App extends Component {
 
   render() {
     const {loaded, Books} = this.props;
-    const {itemsPerPage, currentPage, author, title, date,deleteBook} = this.state;
-    console.log('deleteBook HERE',deleteBook);
+    const {itemsPerPage, currentPage, author, title, date} = this.state;
     return (
       <div>
         <Header onEditBook={this.onEditBook}/>
@@ -147,7 +146,7 @@ class App extends Component {
           </Modal>
           <Modal isOpen={this.state.modal2} toggle={this.toggle2}>
             <ModalHeader toggle={this.toggle2}>Are you sure want to delete this?</ModalHeader>
-            <ModalBody>WTF</ModalBody>
+            <ModalBody>{this.state.deleteBook.title}</ModalBody>
             <ModalFooter>
               <Button color="primary" onClick={this.toggle2}>Cancel</Button>
               <Button color="danger" onClick={this.modalDeleteBook}>Yes delete!</Button>
