@@ -4,6 +4,8 @@
   "homepage": "https://ildevelop.github.io/react-books",
   "private": true,
   "dependencies": {
+    "ejs": "^2.5.6",
+    "express": "^4.15.2",
     "babel-core": "6.26.0",
     "babel-eslint": "7.2.3",
     "babel-jest": "20.0.3",
@@ -89,6 +91,8 @@
     "extends": "react-app"
   },
   "devDependencies": {
+    "request": "^2.81.0",
+    "tape": "^4.7.0",
     "gh-pages": "^1.1.0",
     "autoprefixer": "7.1.6",
     "postcss-flexbugs-fixes": "3.2.0",
