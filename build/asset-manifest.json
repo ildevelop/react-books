@@ -1,9 +1,8 @@
 {
-  "main.js": "static/js/main.049c77a8.js",
-  "main.js.map": "static/js/main.049c77a8.js.map",
+  "main.js": "static/js/main.bf397513.js",
+  "main.js.map": "static/js/main.bf397513.js.map",
+  "static/media/BookList.scss": "static/media/BookList.59a623e6.scss",
   "static/media/Loader.scss": "static/media/Loader.137f61ea.scss",
-  "static/media/BookList.scss": "static/media/BookList.606d1abf.scss",
-  "static/media/bootstrap.scss": "static/media/bootstrap.c70bed7a.scss",
-  "static/media/header.scss": "static/media/header.24f9085d.scss",
-  "static/media/index.scss": "static/media/index.3febd5f9.scss"
+  "static/media/bootstrap.scss": "static/media/bootstrap.869a892a.scss",
+  "static/media/index.scss": "static/media/index.6c39f028.scss"
 }
