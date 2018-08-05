@@ -1,13 +1,13 @@
-import React, { Component } from 'react';
-import { withRouter } from 'react-router';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import { Container } from 'reactstrap';
+import React, {Component} from 'react';
+import {withRouter} from 'react-router';
+import {bindActionCreators} from 'redux';
+import {connect} from 'react-redux';
+import {Container} from 'reactstrap';
 import * as selector from './../selectors'
 import * as mainActions from '../actions/mainActions';
 import Header from "../components/Header/Header";
 import BookList from "../components/BookList/BookList";
-import { Button, Input,Label ,Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import {Button, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap';
 
 class App extends Component {
   constructor(props) {
@@ -16,26 +16,37 @@ class App extends Component {
       currentPage: 1,
       itemsPerPage: 20,
       modal: false,
-      author:"",
-      title:"",
-      id:null,
-      newBook:null,
-      img:null,
-      date: ""
+      modal2: false,
+      author: "",
+      title: "",
+      id: null,
+      newBook: null,
+      img: null,
+      date: "",
+      deleteBook:{}
     };
     this.toggle = this.toggle.bind(this);
+    this.modalDeleteBook = this.modalDeleteBook.bind(this);
+    this.toggle2 = this.toggle2.bind(this);
 
   };
+
   toggle() {
     this.setState({
       modal: !this.state.modal,
-      author:"",
-      title:"",
-      id:null,
-      newBook:null,
-      img:null,
-      date:""
+      author: "",
+      title: "",
+      id: null,
+      newBook: null,
+      img: null,
+      date: ""
     });
+  }
+
+  toggle2() {
+    this.setState({
+      modal2: !this.state.modal2
+    })
   }
 
   componentWillMount() {
@@ -46,32 +57,41 @@ class App extends Component {
     this.props.searchBook(value);
   };
   handleRemoveMyBook = Book => {
-    this.props.removeBook(Book);
+    this.setState({deleteBook:Book});
+    this.toggle2();
   };
-  onEditBook= Book => {
-    if (Book.id){
+
+  modalDeleteBook = () =>{
+    this.props.removeBook(this.state.deleteBook);
+    this.setState({deleteBook:{}, modal2: !this.state.modal2});
+
+  }
+  onEditBook = Book => {
+    if (Book.id) {
       this.setState({
-        author:Book.author,
-        title:Book.title,
-        date:Book.date,
-        id:Book.id,
-        img:Book.img,
+        author: Book.author,
+        title: Book.title,
+        date: Book.date,
+        id: Book.id,
+        img: Book.img,
         modal: !this.state.modal,
       })
-    } else this.setState({ modal: !this.state.modal, newBook:true})
+    } else this.setState({modal: !this.state.modal, newBook: true})
 
   };
 
-  onUpdate(){
+  onUpdate() {
     this.props.editBook({
-      author:this.state.author,
-      title:this.state.title,
-      date:this.state.date,
-      id:this.state.id,
-      img:this.state.img,
-      newBook:this.state.newBook});
+      author: this.state.author,
+      title: this.state.title,
+      date: this.state.date,
+      id: this.state.id,
+      img: this.state.img,
+      newBook: this.state.newBook
+    });
     this.toggle()
   }
+
   page = page => {
     this.setState({
       currentPage: page,
@@ -79,19 +99,16 @@ class App extends Component {
   };
 
   render() {
-    const { loaded,searchValue,searchedUsers,Books} = this.props;
-    const {itemsPerPage, currentPage,author,title,date} = this.state;
-    let count = this.props.counter;
-    console.log('main reducer',count);
+    const {loaded, Books} = this.props;
+    const {itemsPerPage, currentPage, author, title, date,deleteBook} = this.state;
+    console.log('deleteBook HERE',deleteBook);
     return (
       <div>
-        <Header onEditBook={this.onEditBook} />
+        <Header onEditBook={this.onEditBook}/>
         <Container>
-
           <BookList
             loaded={loaded}
             Books={Books}
-            value={searchValue}
             onInputChange={this.handleSearchBook}
             onEditBook={this.onEditBook}
             onRemoveBook={this.handleRemoveMyBook}
@@ -99,29 +116,41 @@ class App extends Component {
             itemsPerPage={itemsPerPage}
             page={this.page}
           />
-          <Modal isOpen={this.state.modal} toggle={this.toggle} >
-            <ModalHeader toggle={this.toggle}>{this.state.id?"Edit book":"Add new book"}</ModalHeader>
+          <Modal isOpen={this.state.modal} toggle={this.toggle}>
+            <ModalHeader toggle={this.toggle}>{this.state.id ? "Edit book" : "Add new book"}</ModalHeader>
             <ModalBody>
               <Label for="exampleEmail">Author Name:</Label>
-              <Input type="text"  placeholder="title of your book" value={author}
-                     onChange={(value) => {this.setState({author:value.target.value})}} />
-              <Label for="exampleEmail">Title</Label>
-              <Input type="text"  placeholder="title of your book" value={title}
+              <Input type="text" placeholder="title of your book" value={author}
                      onChange={(value) => {
-                       this.setState({title:value.target.value})}} />
+                       this.setState({author: value.target.value})
+                     }}/>
+              <Label for="exampleEmail">Title</Label>
+              <Input type="text" placeholder="title of your book" value={title}
+                     onChange={(value) => {
+                       this.setState({title: value.target.value})
+                     }}/>
 
               <Label for="exampleEmail">Published Date:</Label>
-              <Input type="date"  placeholder="title of your book" value={date}
+              <Input type="date" placeholder="title of your book" value={date}
                      onChange={(value) => {
-                       this.setState({date:value.target.value})}} />
+                       this.setState({date: value.target.value})
+                     }}/>
 
             </ModalBody>
             <ModalFooter>
               <Button color="primary" onClick={this.toggle}>Cancel</Button>
               {
-                this.state.id?<Button color="success" onClick={this.onUpdate.bind(this)}>Edit</Button>:
+                this.state.id ? <Button color="success" onClick={this.onUpdate.bind(this)}>Edit</Button> :
                   <Button color="success" onClick={this.onUpdate.bind(this)}>Add</Button>
               }
+            </ModalFooter>
+          </Modal>
+          <Modal isOpen={this.state.modal2} toggle={this.toggle2}>
+            <ModalHeader toggle={this.toggle2}>Are you sure want to delete this?</ModalHeader>
+            <ModalBody>WTF</ModalBody>
+            <ModalFooter>
+              <Button color="primary" onClick={this.toggle2}>Cancel</Button>
+              <Button color="danger" onClick={this.modalDeleteBook}>Yes delete!</Button>
             </ModalFooter>
           </Modal>
         </Container>
@@ -135,9 +164,9 @@ const mapStateToProps = state => ({
   loaded: selector.getLoadingStatus(state),
   Book: selector.getBook(state),
   Books: selector.getBooks(state),
-  searchValue:selector.getSearchValue(state),
+  searchValue: selector.getSearchValue(state),
   searchedUsers: selector.getSearchedBook(state),
-  counter:state.countBooks
+  counter: state.countBooks
 
 });
 

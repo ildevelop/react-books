@@ -4,15 +4,8 @@ import Loader from '../Loader/Loader';
 import './BookList.scss'
 
 class bookList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-
-    };
-  }
-
   render() {
-    const {value, onRemoveBook, onEditBook, Books, currentPage, itemsPerPage, onInputChange, loaded} = this.props;
+    const { onRemoveBook, onEditBook, Books, currentPage, itemsPerPage, loaded} = this.props;
     const startOffset = (currentPage - 1) * itemsPerPage;
     let startCount = 0;
     return (
@@ -20,12 +13,6 @@ class bookList extends React.Component {
         {loaded ? (
           <div className="search-list">
             <p>All Books:{Books.length}</p>
-            {/*<Input*/}
-              {/*type="text"*/}
-              {/*placeholder="Please, enter name of book or author name"*/}
-              {/*value={value}*/}
-              {/*onChange={({target}) => onInputChange(target.value)}*/}
-            {/*/>*/}
             <ListGroup>
               {Books.map((Book, index) => {
                 return index >= startOffset && startCount < itemsPerPage ? ++startCount && (
