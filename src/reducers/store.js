@@ -40,6 +40,13 @@ const mainReducer = (state = initialState, action) => {
       console.log('searchedToRemove',newNooks );
 
       return {...state,Books:newNooks } ;
+    case actionTypes.ADD_NEW_BOOK:
+      console.log("ADD_NEW_BOOK",action.payload);
+      let newBooks = state.Books;
+      newBooks.push(action.payload);
+      console.log('newBooks',newBooks);
+
+      return {...state,Books:newBooks } ;
 
     default:
       return state;

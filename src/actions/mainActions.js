@@ -38,15 +38,43 @@ export const removeBook = Book => {
 };
 export const editBook = Book => {
   console.log('editBook',Book);
-  return {
-    type: mainConstanst.EDIT_MY_BOOK,
-    payload: Book
-  };
+  let newTitle = formatTitle(Book.title);
+  console.log('newTitle',newTitle);
+  if(Book.newBook){
+    return {
+      type: mainConstanst.ADD_NEW_BOOK,
+      payload: {
+        author: Book.author,
+        title: newTitle,
+        date: Book.date,
+        id: Book.date,
+        img: "https://placem.at/things?w=200&h=200&random="+Book.date,
+      }
+    };
+  }else{
+    return {
+      type: mainConstanst.EDIT_MY_BOOK,
+      payload: {
+        author: Book.author,
+        title: newTitle,
+        date: Book.date,
+        id: Book.id,
+        img: Book.img,
+      }
+    };
+  }
+
 };
 export const addBook = Book => {
+  let newTitle = formatTitle(Book.title);
   return {
     type: mainConstanst.ADD_MY_Book,
-    Book
-  };
+    Book: {
+      author: Book.author,
+      title: newTitle,
+      date: Book.date,
+      id: Book.id,
+      img: Book.img,
+    }};
 };
 

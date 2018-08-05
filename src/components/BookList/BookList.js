@@ -32,18 +32,16 @@ class bookList extends React.Component {
             <ListGroup>
               {Books.map((Book, index) => {
                 return index >= startOffset && startCount < itemsPerPage ? ++startCount && (
-                  <ListGroupItem key={index} className="text-center" onClick={(value) => {
-                    console.log("data", value);
-                  }}>
+                  <ListGroupItem key={index} className="text-center">
                     <img alt="book" src={Book.img}/>
                     <p>{Book.author}</p>
                     <p>{Book.title}</p>
 
                     <Button color="warning"
                             onClick={() => onEditBook(Book)}
-                            style={{marginBottom: "10px",borderRadius:"1rem 0 0 1rem"}}> E d i t  </Button>
+                            style={{borderRadius:"1rem 0 0 1rem"}}> E d i t  </Button>
                     <Button
-                      style={{marginBottom: "10px",borderRadius:"0 1rem 1rem 0"}}
+                      style={{borderRadius:"0 1rem 1rem 0"}}
                       color="danger"
                       onClick={() => onRemoveBook(Book)}>
                       D e l e t e

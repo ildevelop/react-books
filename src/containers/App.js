@@ -13,23 +13,37 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      books:this.props.Books,
       currentPage: 1,
       itemsPerPage: 20,
       modal: false,
       author:"",
       title:"",
       id:null,
-      date: new Date()
+      newBook:null,
+      img:null,
+      date: null
     };
     this.toggle = this.toggle.bind(this);
 
   };
   toggle() {
     this.setState({
-      modal: !this.state.modal
+      modal: !this.state.modal,
+      author:"",
+      title:"",
+      id:null,
+      newBook:null,
+      img:null,
+      date:null
     });
   }
-
+  // componentWillReceiveProps(nextProps, nextState) {
+  //   console.log('nextProps',nextProps);
+  //   console.log('nextState',nextState);
+  //
+  //   this.props = nextProps;
+  // }
   componentDidMount() {
     this.props.getBook();
   }
@@ -41,24 +55,33 @@ class App extends Component {
     this.props.removeBook(Book);
   };
   onEditBook= Book => {
-    console.log('onEditBook',Book);
-    this.setState({
-      author:Book.author,
-      title:Book.title,
-      date:Book.date,
-      id:Book.id,
-      img:Book.img,
-      modal: !this.state.modal
-    })
+    console.log('onEditBook2',Book);
+    if (Book.id){
+      this.setState({
+        author:Book.author,
+        title:Book.title,
+        date:Book.date,
+        id:Book.id,
+        img:Book.img,
+        modal: !this.state.modal,
+      })
+    } else this.setState({ modal: !this.state.modal, newBook:true})
+
   };
 
   onUpdate(){
-    this.props.editBook({author:this.state.author,title:this.state.title,date:this.state.date,id:this.state.id,img:this.state.img});
+    this.props.editBook({
+      author:this.state.author,
+      title:this.state.title,
+      date:this.state.date,
+      id:this.state.id,
+      img:this.state.img,
+      newBook:this.state.newBook});
     this.toggle()
   }
   page = page => {
     this.setState({
-      currentPage: page
+      currentPage: page,
     });
   };
 
@@ -68,7 +91,7 @@ class App extends Component {
 
     return (
       <div>
-        <Header />
+        <Header onEditBook={this.onEditBook} />
         <Container>
 
           <BookList
@@ -83,7 +106,7 @@ class App extends Component {
             page={this.page}
           />
           <Modal isOpen={this.state.modal} toggle={this.toggle} >
-            <ModalHeader toggle={this.toggle}>Edit book</ModalHeader>
+            <ModalHeader toggle={this.toggle}>{this.state.id?"Edit book":"Add new book"}</ModalHeader>
             <ModalBody>
               <Label for="exampleEmail">Author Name:</Label>
               <Input type="text"  placeholder="title of your book" value={author}
@@ -107,7 +130,10 @@ class App extends Component {
             </ModalBody>
             <ModalFooter>
               <Button color="primary" onClick={this.toggle}>Cancel</Button>
-              <Button color="success" onClick={this.onUpdate.bind(this)}>Edit</Button>
+              {
+                this.state.id?<Button color="success" onClick={this.onUpdate.bind(this)}>Edit</Button>:
+                  <Button color="success" onClick={this.onUpdate.bind(this)}>Add</Button>
+              }
             </ModalFooter>
           </Modal>
         </Container>
