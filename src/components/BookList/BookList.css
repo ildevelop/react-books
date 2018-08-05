@@ -34,5 +34,6 @@
   }
   .search-list .list-group .list-group-item{
     max-width: 95%;
+    margin: 0;
   }
 }
