@@ -119,12 +119,12 @@ class App extends Component {
             <ModalHeader toggle={this.toggle}>{this.state.id ? "Edit book" : "Add new book"}</ModalHeader>
             <ModalBody>
               <Label for="exampleEmail">Author Name:</Label>
-              <Input type="text" placeholder="title of your book" value={author}
+              <Input type="text" placeholder="Ilya Radu" value={author}
                      onChange={(value) => {
                        this.setState({author: value.target.value})
                      }}/>
               <Label for="exampleEmail">Title</Label>
-              <Input type="text" placeholder="title of your book" value={title}
+              <Input type="text" placeholder="My life first love" value={title}
                      onChange={(value) => {
                        this.setState({title: value.target.value})
                      }}/>
@@ -137,10 +137,10 @@ class App extends Component {
 
             </ModalBody>
             <ModalFooter>
-              <Button color="primary" onClick={this.toggle}>Cancel</Button>
+              <Button color="primary" onClick={this.toggle} >Cancel</Button>
               {
-                this.state.id ? <Button color="success" onClick={this.onUpdate.bind(this)}>Edit</Button> :
-                  <Button color="success" onClick={this.onUpdate.bind(this)}>Add</Button>
+                this.state.id ? <Button color="success" onClick={this.onUpdate.bind(this)} disabled={this.state.author.length===0 || this.state.title.length===0?true:false}>Edit</Button> :
+                  <Button color="success" onClick={this.onUpdate.bind(this)} disabled={this.state.author.length===0 || this.state.title.length===0?true:false}>Add</Button>
               }
             </ModalFooter>
           </Modal>
